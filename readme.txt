@@ -2,7 +2,7 @@
 Tags: woocommerce, wholesale, pricing, quantity, boxes
 Requires at least: 6.9
 Tested up to: 7.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -62,6 +62,11 @@ Yes. The plugin declares compatibility with WooCommerce High-Performance Order S
 
 == Changelog ==
 
+= 1.0.1 =
+* Restored the variable-product helper message shown before a variation is selected.
+* The helper now switches to the selected variation's box quantity and box price, then returns when the variation is reset.
+* Corrected repository licensing to align with GPLv2 or later metadata.
+
 = 1.0.0 =
 * First public stable release.
 * Includes simple and variable product box pricing, bulk variation editing, cart and order metadata, HPOS compatibility, and optional VS Labs Hub integration.
@@ -80,5 +85,5 @@ Yes. The plugin declares compatibility with WooCommerce High-Performance Order S
 
 == Upgrade Notice ==
 
-= 1.0.0 =
-First public stable release of VS Box Quantity Pricing.
+= 1.0.1 =
+Restores the pre-selection box pricing helper for variable products and aligns repository licensing metadata.
