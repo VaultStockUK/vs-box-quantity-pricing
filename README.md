@@ -36,6 +36,8 @@ Set **Units Per Box** on the parent variable product to create a default. Each v
 - enter `1` to disable box pricing for that variation; or
 - enter `2` or greater to use a variation-specific box size.
 
+Before a boxed variation is selected, the product page prompts the customer to select an option to see the box quantity and box price. Once selected, the prompt is replaced by the selected variation's box details.
+
 ## Pricing model
 
 The transactional price for one cart quantity is:
@@ -50,4 +52,4 @@ The repository includes a WordPress.org-standard `readme.txt` and release branch
 
 ## Current version
 
-**1.0.0**
+**1.0.1**
