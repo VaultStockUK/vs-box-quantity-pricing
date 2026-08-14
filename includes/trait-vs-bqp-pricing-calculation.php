@@ -16,6 +16,8 @@ trait VS_BQP_Pricing_Calculation {
             if ( $units <= 1 ) {
                 continue;
             }
+            $unit_price = isset( $item[ self::CART_UNIT_PRICE_KEY ] ) ? (float) $item[ self::CART_UNIT_PRICE_KEY ] : (float) $product->get_price( 'edit' );
+            $product->set_price( $unit_price * $units );
         }
     }
 }
