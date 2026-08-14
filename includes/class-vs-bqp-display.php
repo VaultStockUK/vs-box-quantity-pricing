@@ -10,11 +10,18 @@ class VS_BQP_Display {
     }
 
     public function init() {
-        require_once VS_BQP_PATH . 'includes/class-vs-bqp-display-price.php';
-        require_once VS_BQP_PATH . 'includes/class-vs-bqp-display-cart.php';
-        require_once VS_BQP_PATH . 'includes/class-vs-bqp-display-variation.php';
-        ( new VS_BQP_Display_Price( $this->product_data ) )->init();
-        ( new VS_BQP_Display_Cart( $this->product_data ) )->init();
-        ( new VS_BQP_Display_Variation( $this->product_data ) )->init();
+        add_filter( 'woocommerce_get_price_html', array( $this, 'filter_price_html' ), 20, 2 );
+    }
+
+    public function filter_price_html( $price_html, $product ) {
+        if ( is_admin() && ! wp_doing_ajax() ) return $price_html;
+        if ( ! $product instanceof WC_Product || '' === $price_html ) return $price_html;
+        $units = $this->product_data->get_units_per_box( $product );
+        if ( $units <= 1 ) return $price_html;
+        if ( $product->is_type( 'variable' ) ) {
+            return '<span class="vs-bqp-unit-price">' . $price_html . ' <small>' . esc_html__( 'each', 'vs-box-quantity-pricing' ) . '</small></span><br><small class="vs-bqp-box-info">' . esc_html( sprintf( __( 'Default: sold in boxes of %d. Select options for the final box size.', 'vs-box-quantity-pricing' ), $units ) ) . '</small>';
+        }
+        $box_price = (float) $product->get_price( 'edit' ) * $units;
+        return '<span class="vs-bqp-unit-price">' . $price_html . ' <small>' . esc_html__( 'each', 'vs-box-quantity-pricing' ) . '</small></span><br><small class="vs-bqp-box-info">' . esc_html( sprintf( __( '%1$d per box · %2$s per box', 'vs-box-quantity-pricing' ), $units, wp_strip_all_tags( wc_price( $box_price ) ) ) ) . '</small>';
     }
 }
