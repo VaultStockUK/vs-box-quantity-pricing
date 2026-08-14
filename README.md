@@ -50,4 +50,4 @@ The repository includes a WordPress.org-standard `readme.txt` and release branch
 
 ## Current version
 
-**0.2.3**
+**1.0.0**
