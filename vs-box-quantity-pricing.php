@@ -7,11 +7,11 @@
  * Author:      VS Labs
  * Author URI:  https://labs.vaultstock.co.uk/
  * Text Domain: vs-box-quantity-pricing
- * Requires at least: 6.5
+ * Requires at least: 6.9
  * Requires PHP: 7.4
  * Requires Plugins: woocommerce
  * WC requires at least: 8.0
- * WC tested up to: 10.1
+ * WC tested up to: 10.9
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
