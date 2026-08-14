@@ -2,7 +2,7 @@
 Tags: woocommerce, wholesale, pricing, quantity, boxes
 Requires at least: 6.9
 Tested up to: 7.0
-Stable tag: 0.2.3
+Stable tag: 1.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -62,6 +62,11 @@ Yes. The plugin declares compatibility with WooCommerce High-Performance Order S
 
 == Changelog ==
 
+= 1.0.0 =
+* First public stable release.
+* Includes simple and variable product box pricing, bulk variation editing, cart and order metadata, HPOS compatibility, and optional VS Labs Hub integration.
+* Passed WordPress Plugin Check for plugin repository, security and general checks.
+
 = 0.2.3 =
 * Added WordPress.org Plugin Directory metadata and validation support.
 * Declared WooCommerce through WordPress's native Requires Plugins header.
@@ -75,5 +80,5 @@ Yes. The plugin declares compatibility with WooCommerce High-Performance Order S
 
 == Upgrade Notice ==
 
-= 0.2.3 =
-WordPress.org release-hardening update. No pricing behaviour changes are required when upgrading from 0.2.2.
+= 1.0.0 =
+First public stable release of VS Box Quantity Pricing.
