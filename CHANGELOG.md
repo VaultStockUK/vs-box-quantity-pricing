@@ -6,6 +6,18 @@ The format is based on Keep a Changelog and the project uses semantic versioning
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-08-14
+
+### Fixed
+
+- Restored the variable-product helper message shown before a variation is selected.
+- Restored the helper message when a selected variation is reset.
+- Kept selected variation box quantity and box price replacement behaviour unchanged.
+
+### Changed
+
+- Aligned the repository license file with the plugin's GPLv2-or-later declaration.
+
 ## [1.0.0] - 2026-08-14
 
 ### Added
