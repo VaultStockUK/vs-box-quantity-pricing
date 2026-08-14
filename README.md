@@ -12,7 +12,7 @@ VS Box Quantity Pricing is a lightweight WooCommerce extension for products that
 
 WooCommerce's quantity remains the number of boxes (`1`, `2`, `3`), while the plugin changes the cart product price to the price of one box. WooCommerce then applies quantity, tax, coupons and totals normally.
 
-## v0.1.0 scope
+## Features
 
 - Simple products.
 - Variable products.
@@ -23,6 +23,8 @@ WooCommerce's quantity remains the number of boxes (`1`, `2`, `3`), while the pl
 - Per-unit price presentation remains visible.
 - Box price, box size and total unit information in the cart/checkout.
 - Box context saved to order line items.
+- Bulk variation editing.
+- Optional VS Labs Hub integration.
 - No template overrides or third-party dependencies.
 - WooCommerce HPOS compatibility.
 
@@ -42,6 +44,10 @@ The transactional price for one cart quantity is:
 
 WooCommerce then multiplies this by the cart quantity. The implementation retains the original unit price on the cart line so repeated WooCommerce total calculations cannot multiply the box price twice.
 
-## Status
+## WordPress.org readiness
 
-Target initial version: **0.1.0**
+The repository includes a WordPress.org-standard `readme.txt` and release branches are validated with the official WordPress Plugin Check action in addition to PHP and JavaScript syntax checks.
+
+## Current version
+
+**0.2.3**
