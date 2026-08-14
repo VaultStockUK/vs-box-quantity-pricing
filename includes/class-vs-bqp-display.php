@@ -14,6 +14,8 @@ class VS_BQP_Display {
         add_filter( 'woocommerce_get_price_html', array( $this, 'filter_price_html' ), 20, 2 );
         add_filter( 'woocommerce_available_variation', array( $this, 'add_variation_payload' ), 20, 3 );
         add_action( 'woocommerce_after_add_to_cart_quantity', array( $this, 'render_quantity_suffix' ) );
+        add_filter( 'woocommerce_get_item_data', array( $this, 'add_cart_item_data' ), 10, 2 );
+        add_filter( 'woocommerce_cart_item_quantity', array( $this, 'append_cart_quantity_label' ), 10, 3 );
     }
 
     public function enqueue_assets() {
@@ -42,6 +44,22 @@ class VS_BQP_Display {
         } elseif ( $this->product_data->get_units_per_box( $product ) > 1 ) {
             echo '<span class="vs-bqp-quantity-suffix"> ' . esc_html__( 'boxes', 'vs-box-quantity-pricing' ) . '</span>';
         }
+    }
+
+    public function add_cart_item_data( $item_data, $cart_item ) {
+        if ( empty( $cart_item[ VS_BQP_Pricing::CART_UNITS_KEY ] ) ) return $item_data;
+        $units = absint( $cart_item[ VS_BQP_Pricing::CART_UNITS_KEY ] );
+        if ( $units <= 1 ) return $item_data;
+        $quantity = isset( $cart_item['quantity'] ) ? absint( $cart_item['quantity'] ) : 0;
+        $item_data[] = array( 'key' => __( 'Unit price', 'vs-box-quantity-pricing' ), 'value' => wp_kses_post( wc_price( (float) $cart_item[ VS_BQP_Pricing::CART_UNIT_PRICE_KEY ] ) . ' ' . esc_html__( 'each', 'vs-box-quantity-pricing' ) ) );
+        $item_data[] = array( 'key' => __( 'Box size', 'vs-box-quantity-pricing' ), 'value' => sprintf( _n( '%d unit', '%d units', $units, 'vs-box-quantity-pricing' ), $units ) );
+        $item_data[] = array( 'key' => __( 'Total units', 'vs-box-quantity-pricing' ), 'value' => (string) ( $units * $quantity ) );
+        return $item_data;
+    }
+
+    public function append_cart_quantity_label( $html, $cart_item_key, $cart_item ) {
+        if ( ! empty( $cart_item[ VS_BQP_Pricing::CART_UNITS_KEY ] ) && absint( $cart_item[ VS_BQP_Pricing::CART_UNITS_KEY ] ) > 1 ) $html .= ' <span class="vs-bqp-cart-quantity-label">' . esc_html__( 'boxes', 'vs-box-quantity-pricing' ) . '</span>';
+        return $html;
     }
 
     public function add_variation_payload( $data, $product, $variation ) {
