@@ -1,6 +1,6 @@
 === VS Box Quantity Pricing ===
 Tags: woocommerce, wholesale, pricing, quantity, boxes
-Requires at least: 6.5
+Requires at least: 6.9
 Tested up to: 7.0
 Stable tag: 0.2.3
 Requires PHP: 7.4
@@ -66,6 +66,7 @@ Yes. The plugin declares compatibility with WooCommerce High-Performance Order S
 * Added WordPress.org Plugin Directory metadata and validation support.
 * Declared WooCommerce through WordPress's native Requires Plugins header.
 * Added the WordPress.org-standard readme.txt.
+* Hardened nonce verification, sanitisation and translation metadata for public distribution.
 
 = 0.2.2 =
 * Added a persistent variable-product box-price display that remains visible with themes that replace WooCommerce price markup.
