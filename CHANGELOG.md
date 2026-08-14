@@ -6,6 +6,14 @@ The format is based on Keep a Changelog and the project uses semantic versioning
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-08-14
+
+### Fixed
+
+- Reworked the variable-product bulk action so **Set units per box** opens a dedicated modal instead of relying on a fragile WooCommerce event hook.
+- Added a secured AJAX handler that applies the selected box quantity to every variation on the product, including variations not visible on the current pagination page.
+- Added an explicit **Use parent setting** action to clear variation-level overrides cleanly.
+
 ## [0.1.0] - 2026-08-14
 
 ### Added
