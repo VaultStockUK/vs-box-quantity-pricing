@@ -6,6 +6,26 @@ The format is based on Keep a Changelog and the project uses semantic versioning
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-08-14
+
+### Fixed
+
+- Moved the live variation box-price display into a persistent WooCommerce variation-form container so themes cannot wipe it out when they refresh their own price markup.
+- Kept the selected variation box size and formatted box price in the variation payload and used those fields as the display source.
+
+## [0.2.0] - 2026-08-14
+
+### Added
+
+- Added optional VS Labs Hub registration so the plugin appears in the shared VS Labs dashboard when the Hub is active.
+- Added GitHub Actions packaging so validated release branches produce an installable WordPress ZIP artifact.
+
+### Fixed
+
+- Improved variable-product frontend handling so selected variations refresh box-size and per-box pricing correctly.
+- Added theme-independent variation display logic for products where the theme changes the standard WooCommerce price markup.
+- Rechecked the custom variation bulk action so Units Per Box can be applied across all variations.
+
 ## [0.1.4] - 2026-08-14
 
 ### Fixed

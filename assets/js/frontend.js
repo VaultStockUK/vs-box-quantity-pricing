@@ -1,12 +1,62 @@
 jQuery(function($){
  $('.variations_form').each(function(){
-  var $f=$(this),$p=$f.closest('.product'),$u=$p.find('.vs-bqp-unit-price').first(),$b=$p.find('.vs-bqp-box-info').first(),$s=$p.find('.vs-bqp-quantity-suffix[data-vs-bqp-variable="1"]').first(),iu=$u.html(),ib=$b.html();
-  $f.on('found_variation',function(e,v){
+  var $f=$(this),$scope=$f.closest('.summary');
+  if(!$scope.length)$scope=$f.closest('.product');
+  if(!$scope.length)$scope=$(document.body);
+
+  var $u=$scope.find('.vs-bqp-unit-price').first();
+  var $s=$scope.find('.vs-bqp-quantity-suffix[data-vs-bqp-variable="1"]').first();
+  var $live=$f.find('.vs-bqp-live-box-info').first();
+  var iu=$u.html();
+
+  function boxInfo(v){
+   if(v.vs_bqp_box_info_html)return v.vs_bqp_box_info_html;
+   if(v.vs_bqp_units_per_box&&v.vs_bqp_box_price_html){
+    return v.vs_bqp_units_per_box+' per box &middot; '+v.vs_bqp_box_price_html+' per box';
+   }
+   return '';
+  }
+
+  function apply(v){
    if(!v)return;
-   if($u.length&&v.vs_bqp_unit_price_html)$u.html(v.vs_bqp_unit_price_html+' <small>'+v.vs_bqp_each_label+'</small>');
-   if($b.length){if(v.vs_bqp_is_boxed)$b.html(v.vs_bqp_box_info_html).prop('hidden',false);else $b.empty().prop('hidden',true);}
+   if($u.length&&v.vs_bqp_unit_price_html){
+    $u.html(v.vs_bqp_unit_price_html+' <small>'+v.vs_bqp_each_label+'</small>');
+   }
+   var info=boxInfo(v);
+   if(v.vs_bqp_is_boxed&&info){
+    if($live.length)$live.html(info).prop('hidden',false).show();
+   }else{
+    if($live.length)$live.empty().prop('hidden',true).hide();
+   }
    if($s.length)$s.prop('hidden',!v.vs_bqp_is_boxed);
+  }
+
+  function currentVariation(){
+   var id=parseInt($f.find('input.variation_id').val(),10);
+   var vars=$f.data('product_variations');
+   if(!id||!$.isArray(vars))return null;
+   for(var i=0;i<vars.length;i++){
+    if(parseInt(vars[i].variation_id,10)===id)return vars[i];
+   }
+   return null;
+  }
+
+  function refresh(){
+   var v=currentVariation();
+   if(v)apply(v);
+  }
+
+  $f.on('found_variation',function(e,v){apply(v);});
+  $f.on('woocommerce_variation_has_changed',function(){window.setTimeout(refresh,0);});
+  $f.on('reset_data hide_variation',function(){
+   if($u.length)$u.html(iu);
+   if($live.length)$live.empty().prop('hidden',true).hide();
+   if($s.length)$s.prop('hidden',true);
   });
-  $f.on('reset_data hide_variation',function(){if($u.length)$u.html(iu);if($b.length)$b.html(ib).prop('hidden',false);if($s.length)$s.prop('hidden',true);});
+
+  window.setTimeout(function(){
+   $f.trigger('check_variations');
+   window.setTimeout(refresh,50);
+  },50);
  });
 });

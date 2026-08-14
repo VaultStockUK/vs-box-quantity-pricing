@@ -13,6 +13,7 @@ class VS_BQP_Display {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
         add_filter( 'woocommerce_get_price_html', array( $this, 'filter_price_html' ), 20, 2 );
         add_filter( 'woocommerce_available_variation', array( $this, 'add_variation_payload' ), 20, 3 );
+        add_action( 'woocommerce_before_variations_form', array( $this, 'render_variation_box_info' ), 5 );
         add_action( 'woocommerce_after_add_to_cart_quantity', array( $this, 'render_quantity_suffix' ) );
         add_filter( 'woocommerce_get_item_data', array( $this, 'add_cart_item_data' ), 10, 2 );
         add_filter( 'woocommerce_cart_item_quantity', array( $this, 'append_cart_quantity_label' ), 10, 3 );
@@ -28,12 +29,18 @@ class VS_BQP_Display {
         $units = $this->product_data->get_units_per_box( $product );
         if ( $product->is_type( 'variable' ) ) {
             if ( $units <= 1 && ! $this->variable_has_boxed_variations( $product ) ) return $price_html;
-            $text = $units > 1 ? sprintf( __( 'Default: sold in boxes of %d. Select options for the final box size.', 'vs-box-quantity-pricing' ), $units ) : __( 'Box size is shown after selecting an option.', 'vs-box-quantity-pricing' );
-            return '<span class="vs-bqp-unit-price">' . $price_html . ' <small>' . esc_html__( 'each', 'vs-box-quantity-pricing' ) . '</small></span><br><small class="vs-bqp-box-info">' . esc_html( $text ) . '</small>';
+            return '<span class="vs-bqp-unit-price">' . $price_html . ' <small>' . esc_html__( 'each', 'vs-box-quantity-pricing' ) . '</small></span>';
         }
         if ( $units <= 1 ) return $price_html;
         $box_price = (float) $product->get_price( 'edit' ) * $units;
         return '<span class="vs-bqp-unit-price">' . $price_html . ' <small>' . esc_html__( 'each', 'vs-box-quantity-pricing' ) . '</small></span><br><small class="vs-bqp-box-info">' . esc_html( sprintf( __( '%1$d per box · %2$s per box', 'vs-box-quantity-pricing' ), $units, wp_strip_all_tags( wc_price( $box_price ) ) ) ) . '</small>';
+    }
+
+    public function render_variation_box_info() {
+        global $product;
+        if ( ! $product instanceof WC_Product || ! $product->is_type( 'variable' ) ) return;
+        if ( $this->product_data->get_units_per_box( $product ) <= 1 && ! $this->variable_has_boxed_variations( $product ) ) return;
+        echo '<div class="vs-bqp-live-box-info" hidden aria-live="polite"></div>';
     }
 
     public function render_quantity_suffix() {
@@ -72,6 +79,7 @@ class VS_BQP_Display {
         $data['vs_bqp_unit_price_html'] = wp_kses_post( wc_price( $display_unit ) );
         if ( $units > 1 ) {
             $display_box = wc_get_price_to_display( $variation, array( 'price' => $unit_price, 'qty' => $units ) );
+            $data['vs_bqp_box_price_html'] = wp_kses_post( wc_price( $display_box ) );
             $data['vs_bqp_box_info_html'] = wp_kses_post( sprintf( __( '%1$d per box &middot; %2$s per box', 'vs-box-quantity-pricing' ), $units, wc_price( $display_box ) ) );
         }
         return $data;
