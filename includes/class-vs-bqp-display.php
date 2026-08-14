@@ -72,6 +72,7 @@ class VS_BQP_Display {
         $data['vs_bqp_unit_price_html'] = wp_kses_post( wc_price( $display_unit ) );
         if ( $units > 1 ) {
             $display_box = wc_get_price_to_display( $variation, array( 'price' => $unit_price, 'qty' => $units ) );
+            $data['vs_bqp_box_price_html'] = wp_kses_post( wc_price( $display_box ) );
             $data['vs_bqp_box_info_html'] = wp_kses_post( sprintf( __( '%1$d per box &middot; %2$s per box', 'vs-box-quantity-pricing' ), $units, wc_price( $display_box ) ) );
         }
         return $data;
