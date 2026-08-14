@@ -16,4 +16,14 @@ trait VS_BQP_Variation_Field {
             'custom_attributes' => array( 'min' => '1', 'step' => '1' ),
         ) );
     }
+
+    public function save_variation_field( $variation_id, $loop ) {
+        if ( ! isset( $_POST[ self::META_KEY ][ $loop ] ) ) return;
+        $variation = wc_get_product( $variation_id );
+        if ( ! $variation ) return;
+        $value = $this->sanitize_units_per_box( wc_clean( wp_unslash( $_POST[ self::META_KEY ][ $loop ] ) ) );
+        if ( null === $value ) $variation->delete_meta_data( self::META_KEY );
+        else $variation->update_meta_data( self::META_KEY, $value );
+        $variation->save_meta_data();
+    }
 }
