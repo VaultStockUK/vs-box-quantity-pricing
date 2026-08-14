@@ -20,14 +20,30 @@ trait VS_BQP_Variation_Field {
     }
 
     public function save_variation_field( $variation_id, $loop ) {
-        if (
+        if ( ! current_user_can( 'edit_post', $variation_id ) ) {
+            return;
+        }
+
+        if ( wp_doing_ajax() ) {
+            if (
+                ! isset( $_POST['security'] ) ||
+                ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['security'] ) ), 'save-variations' )
+            ) {
+                return;
+            }
+        } elseif (
             ! isset( $_POST['woocommerce_meta_nonce'] ) ||
             ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ), 'woocommerce_save_data' )
         ) {
             return;
         }
 
-        if ( ! isset( $_POST[ self::META_KEY ][ $loop ] ) ) {
+        if ( ! isset( $_POST[ self::META_KEY ] ) || ! is_array( $_POST[ self::META_KEY ] ) ) {
+            return;
+        }
+
+        $posted_values = map_deep( wp_unslash( $_POST[ self::META_KEY ] ), 'sanitize_text_field' );
+        if ( ! array_key_exists( $loop, $posted_values ) ) {
             return;
         }
 
@@ -36,8 +52,7 @@ trait VS_BQP_Variation_Field {
             return;
         }
 
-        $raw_value = sanitize_text_field( wp_unslash( $_POST[ self::META_KEY ][ $loop ] ) );
-        $value     = $this->sanitize_units_per_box( $raw_value );
+        $value = $this->sanitize_units_per_box( $posted_values[ $loop ] );
 
         if ( null === $value ) {
             $variation->delete_meta_data( self::META_KEY );
