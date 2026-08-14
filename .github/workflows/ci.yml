@@ -27,11 +27,24 @@ jobs:
       - name: Validate JavaScript syntax
         run: find assets -type f -name '*.js' -print0 | xargs -0 -n1 node --check
 
-      - name: Build installable ZIP
-        if: startsWith(github.ref, 'refs/heads/release/')
+      - name: Build installable plugin directory
         run: |
           mkdir -p build/vs-box-quantity-pricing
           rsync -a --exclude='.git' --exclude='.github' --exclude='build' ./ build/vs-box-quantity-pricing/
+
+      - name: Run official WordPress Plugin Check
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: './build/vs-box-quantity-pricing'
+          categories: |
+            plugin_repo
+            security
+            general
+          strict: 'true'
+
+      - name: Build installable ZIP
+        if: startsWith(github.ref, 'refs/heads/release/')
+        run: |
           cd build
           zip -r vs-box-quantity-pricing-release.zip vs-box-quantity-pricing
 
