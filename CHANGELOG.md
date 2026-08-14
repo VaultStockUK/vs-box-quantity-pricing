@@ -6,6 +6,13 @@ The format is based on Keep a Changelog and the project uses semantic versioning
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-08-14
+
+### Fixed
+
+- Moved the live variation box-price display into a persistent WooCommerce variation-form container so themes cannot wipe it out when they refresh their own price markup.
+- Kept the selected variation box size and formatted box price in the variation payload and used those fields as the display source.
+
 ## [0.2.0] - 2026-08-14
 
 ### Added
