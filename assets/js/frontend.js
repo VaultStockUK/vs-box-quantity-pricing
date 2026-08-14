@@ -15,6 +15,14 @@ jQuery(function($){
    $u.after('<br>',$live);
   }
 
+  function boxInfo(v){
+   if(v.vs_bqp_box_info_html)return v.vs_bqp_box_info_html;
+   if(v.vs_bqp_units_per_box&&v.vs_bqp_box_price_html){
+    return v.vs_bqp_units_per_box+' per box &middot; '+v.vs_bqp_box_price_html+' per box';
+   }
+   return '';
+  }
+
   function apply(v){
    if(!v)return;
 
@@ -22,9 +30,10 @@ jQuery(function($){
     $u.html(v.vs_bqp_unit_price_html+' <small>'+v.vs_bqp_each_label+'</small>');
    }
 
-   if(v.vs_bqp_is_boxed&&v.vs_bqp_box_info_html){
+   var info=boxInfo(v);
+   if(v.vs_bqp_is_boxed&&info){
     $legacy.prop('hidden',true);
-    if($live.length)$live.html(v.vs_bqp_box_info_html).prop('hidden',false);
+    if($live.length)$live.html(info).prop('hidden',false);
    }else{
     if($live.length)$live.empty().prop('hidden',true);
     $legacy.prop('hidden',true);
