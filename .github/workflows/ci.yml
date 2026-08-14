@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -30,7 +30,13 @@ jobs:
       - name: Build installable plugin directory
         run: |
           mkdir -p build/vs-box-quantity-pricing
-          rsync -a --exclude='.git' --exclude='.github' --exclude='build' ./ build/vs-box-quantity-pricing/
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='build' \
+            --exclude='README.md' \
+            --exclude='ROADMAP.md' \
+            ./ build/vs-box-quantity-pricing/
 
       - name: Run official WordPress Plugin Check
         uses: wordpress/plugin-check-action@v1
