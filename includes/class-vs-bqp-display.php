@@ -67,7 +67,7 @@ class VS_BQP_Display {
             return;
         }
 
-        echo '<div class="vs-bqp-live-box-info" hidden aria-live="polite"></div>';
+        echo '<div class="vs-bqp-live-box-info" aria-live="polite">' . esc_html__( 'Select an option to see the box quantity and box price.', 'vs-box-quantity-pricing' ) . '</div>';
     }
 
     public function render_quantity_suffix() {
@@ -129,10 +129,10 @@ class VS_BQP_Display {
         $unit_price   = (float) $variation->get_price( 'edit' );
         $display_unit = wc_get_price_to_display( $variation, array( 'price' => $unit_price ) );
 
-        $data['vs_bqp_units_per_box']       = $units;
-        $data['vs_bqp_is_boxed']            = $units > 1;
-        $data['vs_bqp_each_label']          = esc_html__( 'each', 'vs-box-quantity-pricing' );
-        $data['vs_bqp_unit_price_html']     = wp_kses_post( wc_price( $display_unit ) );
+        $data['vs_bqp_units_per_box']   = $units;
+        $data['vs_bqp_is_boxed']        = $units > 1;
+        $data['vs_bqp_each_label']      = esc_html__( 'each', 'vs-box-quantity-pricing' );
+        $data['vs_bqp_unit_price_html'] = wp_kses_post( wc_price( $display_unit ) );
 
         if ( $units > 1 ) {
             $display_box = wc_get_price_to_display( $variation, array( 'price' => $unit_price, 'qty' => $units ) );
