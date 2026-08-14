@@ -1,0 +1,2 @@
+<?php
+// VS module.
