@@ -3,21 +3,22 @@
  * Plugin Name: VS Box Quantity Pricing
  * Plugin URI:  https://labs.vaultstock.co.uk/plugins/vs-box-quantity-pricing/
  * Description: Sell WooCommerce products in fixed box quantities while keeping customer-facing prices expressed per individual unit.
- * Version:     0.2.2
+ * Version:     1.0.0
  * Author:      VS Labs
- * Author URI:  https://labs.vaultstock.co.uk
+ * Author URI:  https://labs.vaultstock.co.uk/
  * Text Domain: vs-box-quantity-pricing
- * Requires at least: 6.5
+ * Requires at least: 6.9
  * Requires PHP: 7.4
+ * Requires Plugins: woocommerce
  * WC requires at least: 8.0
- * WC tested up to: 10.1
+ * WC tested up to: 10.9
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'VS_BQP_VERSION', '0.2.2' );
+define( 'VS_BQP_VERSION', '1.0.0' );
 define( 'VS_BQP_FILE', __FILE__ );
 define( 'VS_BQP_PATH', plugin_dir_path( __FILE__ ) );
 

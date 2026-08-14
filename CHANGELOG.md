@@ -6,6 +6,31 @@ The format is based on Keep a Changelog and the project uses semantic versioning
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-08-14
+
+### Added
+
+- First public stable release of VS Box Quantity Pricing.
+- Simple and variable product box-quantity pricing with per-unit price presentation.
+- Bulk variation editing, cart/checkout unit metadata, order line metadata, HPOS compatibility, and optional VS Labs Hub integration.
+- WordPress.org-standard plugin metadata and automated Plugin Check validation.
+
+### Changed
+
+- Promoted the tested WordPress.org release candidate to semantic version 1.0.0.
+
+## [0.2.3] - 2026-08-14
+
+### Added
+
+- Added a WordPress.org-standard `readme.txt` for Plugin Directory submission and release metadata.
+- Added WordPress's native `Requires Plugins: woocommerce` dependency declaration.
+- Added the official WordPress Plugin Check action to release validation.
+
+### Changed
+
+- Hardened release packaging and metadata for public WordPress.org distribution.
+
 ## [0.2.2] - 2026-08-14
 
 ### Fixed
