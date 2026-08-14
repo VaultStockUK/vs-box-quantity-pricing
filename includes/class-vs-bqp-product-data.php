@@ -1,6 +1,7 @@
 <?php
 
 defined( 'ABSPATH' ) || exit;
+require_once VS_BQP_PATH . 'includes/modules.php';
 
 class VS_BQP_Product_Data {
     use VS_BQP_Product_Field;
