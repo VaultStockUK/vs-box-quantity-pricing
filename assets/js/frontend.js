@@ -5,15 +5,9 @@ jQuery(function($){
   if(!$scope.length)$scope=$(document.body);
 
   var $u=$scope.find('.vs-bqp-unit-price').first();
-  var $legacy=$scope.find('.vs-bqp-box-info');
   var $s=$scope.find('.vs-bqp-quantity-suffix[data-vs-bqp-variable="1"]').first();
+  var $live=$f.find('.vs-bqp-live-box-info').first();
   var iu=$u.html();
-  var $live=$scope.find('.vs-bqp-live-box-info').first();
-
-  if(!$live.length&&$u.length){
-   $live=$('<small class="vs-bqp-live-box-info" hidden></small>');
-   $u.after('<br>',$live);
-  }
 
   function boxInfo(v){
    if(v.vs_bqp_box_info_html)return v.vs_bqp_box_info_html;
@@ -25,20 +19,15 @@ jQuery(function($){
 
   function apply(v){
    if(!v)return;
-
    if($u.length&&v.vs_bqp_unit_price_html){
     $u.html(v.vs_bqp_unit_price_html+' <small>'+v.vs_bqp_each_label+'</small>');
    }
-
    var info=boxInfo(v);
    if(v.vs_bqp_is_boxed&&info){
-    $legacy.prop('hidden',true);
-    if($live.length)$live.html(info).prop('hidden',false);
+    if($live.length)$live.html(info).prop('hidden',false).show();
    }else{
-    if($live.length)$live.empty().prop('hidden',true);
-    $legacy.prop('hidden',true);
+    if($live.length)$live.empty().prop('hidden',true).hide();
    }
-
    if($s.length)$s.prop('hidden',!v.vs_bqp_is_boxed);
   }
 
@@ -61,8 +50,7 @@ jQuery(function($){
   $f.on('woocommerce_variation_has_changed',function(){window.setTimeout(refresh,0);});
   $f.on('reset_data hide_variation',function(){
    if($u.length)$u.html(iu);
-   if($live.length)$live.empty().prop('hidden',true);
-   $legacy.prop('hidden',false);
+   if($live.length)$live.empty().prop('hidden',true).hide();
    if($s.length)$s.prop('hidden',true);
   });
 
