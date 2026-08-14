@@ -8,6 +8,7 @@ jQuery(function($){
   var $s=$scope.find('.vs-bqp-quantity-suffix[data-vs-bqp-variable="1"]').first();
   var $live=$f.find('.vs-bqp-live-box-info').first();
   var iu=$u.html();
+  var il=$live.html();
 
   function boxInfo(v){
    if(v.vs_bqp_box_info_html)return v.vs_bqp_box_info_html;
@@ -15,6 +16,12 @@ jQuery(function($){
     return v.vs_bqp_units_per_box+' per box &middot; '+v.vs_bqp_box_price_html+' per box';
    }
    return '';
+  }
+
+  function restoreHelper(){
+   if($live.length&&il){
+    $live.html(il).prop('hidden',false).show();
+   }
   }
 
   function apply(v){
@@ -50,7 +57,7 @@ jQuery(function($){
   $f.on('woocommerce_variation_has_changed',function(){window.setTimeout(refresh,0);});
   $f.on('reset_data hide_variation',function(){
    if($u.length)$u.html(iu);
-   if($live.length)$live.empty().prop('hidden',true).hide();
+   restoreHelper();
    if($s.length)$s.prop('hidden',true);
   });
 
